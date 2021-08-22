@@ -15,6 +15,12 @@ abstract class BaseAdapter implements ClientAdapterInterface
 
     const OPTION_FUNCTION = 'wsfunction';
 
+    const OPTION_FORMAT = 'moodlewsrestformat';
+
+    const RESPONSE_FORMAT_JSON = 'json';
+
+    const RESPONSE_FORMAT_XML = 'xml';
+
     private Connection $connection;
 
     protected HttpClient $client;
@@ -36,9 +42,9 @@ abstract class BaseAdapter implements ClientAdapterInterface
     }
 
     /**
-     * @return Connection|string
+     * @return Connection
      */
-    protected function getConnection()
+    protected function getConnection(): Connection
     {
         return $this->connection;
     }

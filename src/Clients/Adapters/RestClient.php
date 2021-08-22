@@ -6,13 +6,11 @@ use Assert\Assertion;
 use Assert\AssertionFailedException;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\App;
 use Wimando\LaravelMoodle\Clients\BaseAdapter;
 use Wimando\LaravelMoodle\Connection;
 use Wimando\LaravelMoodle\Exceptions\ApiException;
 
-/**
- * @method HttpClient getClient()
- */
 class RestClient extends BaseAdapter
 {
 
@@ -29,24 +27,27 @@ class RestClient extends BaseAdapter
     /**
      * @throws AssertionFailedException
      */
-    public function __construct(string $url, string $token, string $format = 'json')
+    public function __construct(Connection $connection)
     {
-        $this->setResponseFormat($format);
-        $this->setConnection($url, $token);
+        $this->setResponseFormat($connection->getFormat());
+        $this->connection = $connection;
 
-        parent::__construct($this->getConnection());
+        parent::__construct($connection);
     }
 
     /**
+     * @param string $function
+     * @param array $arguments
      * @return array|null
-     * @throws ApiException|GuzzleException
+     * @throws ApiException
+     * @throws GuzzleException
      */
     public function sendRequest(string $function, array $arguments = []): ?array
     {
         $configuration = [
             self::OPTION_FUNCTION => $function,
             self::OPTION_FORMAT => $this->responseFormat,
-            self::OPTION_TOKEN => $this->getConnection()->getToken(),
+            self::OPTION_TOKEN => $this->connection->getToken(),
         ];
 
         $response = $this->getClient()->post('', [
@@ -61,17 +62,17 @@ class RestClient extends BaseAdapter
 
     }
 
-    protected function buildClient(array $options = []): HttpClient
+    protected function buildClient(): HttpClient
     {
-        return new HttpClient(
-            array_merge(
-                $options,
-                [
-                    'base_url' => $this->getEndPoint(),
-                    'base_uri' => $this->getEndPoint()
-                ]
-            )
+        $config = array_merge(
+            $this->connection->getOptions(),
+            [
+                'base_url' => $this->getEndPoint(),
+                'base_uri' => $this->getEndPoint()
+            ]
         );
+
+        return App::make(HttpClient::class, ['config' => $config]);
     }
 
     /**
@@ -88,11 +89,4 @@ class RestClient extends BaseAdapter
         return $this->connection;
     }
 
-    /**
-     * @throws AssertionFailedException
-     */
-    protected function setConnection(string $url, string $token)
-    {
-        $this->connection = new Connection($url, $token);
-    }
 }

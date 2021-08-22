@@ -2,6 +2,7 @@
 
 namespace Wimando\LaravelMoodle\Services;
 
+use Illuminate\Support\Facades\App;
 use ReflectionClass;
 use Wimando\LaravelMoodle\Clients\ClientAdapterInterface;
 use Wimando\LaravelMoodle\Entities\Entity;
@@ -11,9 +12,9 @@ abstract class Service
 
     private ClientAdapterInterface $client;
 
-    public function __construct(ClientAdapterInterface $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = App::make(ClientAdapterInterface::class);
     }
 
     public function getAlias(): string

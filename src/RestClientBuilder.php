@@ -8,11 +8,11 @@ use Wimando\LaravelMoodle\Facades\RestClientFactory;
 
 class RestClientBuilder
 {
-    public function build(): RestClient
+    public function build(string $url, string $token): RestClient
     {
         $connection = ConnectionFactory::create(
-            'url',
-            'token',
+            $url,
+            $token,
             ['verify' => false],
             RestClient::RESPONSE_FORMAT_JSON);
 

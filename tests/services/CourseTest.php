@@ -2,12 +2,14 @@
 
 namespace Wimando\LaravelMoodle\Tests\Services;
 
+use Assert\AssertionFailedException;
 use Wimando\LaravelMoodle\Clients\Adapters\RestClient;
 use Wimando\LaravelMoodle\Clients\ClientAdapterInterface;
 use Wimando\LaravelMoodle\Entities\Course as CourseEntity;
 use Wimando\LaravelMoodle\Entities\CourseCollection;
 use Wimando\LaravelMoodle\Entities\Dto\Course as CourseDto;
-use Wimando\LaravelMoodle\Services\Course;
+use Wimando\LaravelMoodle\Resources\CourseResourceCollection;
+use Wimando\LaravelMoodle\Services\CourseService;
 use Wimando\LaravelMoodle\Tests\MoodleTestCase;
 
 class CourseTest extends MoodleTestCase
@@ -15,17 +17,17 @@ class CourseTest extends MoodleTestCase
 
     protected ClientAdapterInterface $client;
 
-    protected Course $service;
+    protected CourseService $service;
 
     /**
-     * @throws \Assert\AssertionFailedException
+     * @throws AssertionFailedException
      */
     public function setUp()
     {
         parent::setUp();
 
         $this->client = new RestClient($this->getConnection(), 'token');
-        $this->service = new Course($this->client);
+        $this->service = new CourseService($this->client);
     }
 
     public function testGetAll()
@@ -36,7 +38,7 @@ class CourseTest extends MoodleTestCase
         $properties = $courseDto->getProperties();
 
         /** @var CourseEntity $course */
-        foreach ($allCourses->toArray() as $course) {
+        foreach ($allCourses as $course) {
             foreach ($properties as $property => $value) {
                 $courseData = $course->toArray();
                 $this->assertArrayHasKey($property, $courseData);
@@ -44,10 +46,8 @@ class CourseTest extends MoodleTestCase
         }
     }
 
-    /**
-     * @return CourseCollection
-     */
-    public function testCreate(): CourseCollection
+
+    public function testCreate(): CourseResourceCollection
     {
         $courseDto = $this->buildCourse();
         $createdCourses = $this->service->create($courseDto);
@@ -95,7 +95,7 @@ class CourseTest extends MoodleTestCase
         $this->service->delete($ids);
         $courses = $this->service->getAll($ids);
 
-        $this->assertEquals([], $courses->toArray());
+        $this->assertEquals(CourseResourceCollection::make([]), $courses);
     }
 
     /**

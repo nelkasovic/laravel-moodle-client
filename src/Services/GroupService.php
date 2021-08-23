@@ -11,7 +11,7 @@ class GroupService extends Service
 {
     public function getById(int $moodleGroupId): GroupResource
     {
-        $arguments = ['groupids' => $moodleGroupId];
+        $arguments = ['groupids' => [$moodleGroupId]];
 
         $response = $this->sendRequest('core_group_get_groups', $arguments);
 
@@ -40,5 +40,17 @@ class GroupService extends Service
         $response = $this->sendRequest('core_group_delete_groups', ['groupids' => $ids]);
 
         return GroupResourceCollection::make($response);
+    }
+
+    public function create() {
+        // TODO
+    }
+
+    public function addMember() {
+        // TODO
+    }
+
+    public function removeMember() {
+        // TODO
     }
 }

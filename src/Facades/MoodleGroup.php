@@ -15,6 +15,9 @@ use Wimando\LaravelMoodle\Services\GroupService;
  * @method static GroupResourceCollection getCourseGroups(int $moodleCourseId)
  * @method static UserResourceCollection getGroupMembers(int $moodleGroupId)
  * @method static GroupResourceCollection delete(array $ids = [])
+ * @method static mixed create()
+ * @method static mixed addMember()
+ * @method static mixed removeMember()
  */
 class MoodleGroup extends Facade
 {

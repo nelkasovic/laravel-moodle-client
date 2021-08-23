@@ -2,8 +2,10 @@
 
 namespace Wimando\LaravelMoodle\Services;
 
+use App\Facades\Services\MoodleService;
 use Wimando\LaravelMoodle\Entities\Dto\Course as CourseDto;
 use Wimando\LaravelMoodle\Resources\CourseResourceCollection;
+use Wimando\LaravelMoodle\Resources\GroupResourceCollection;
 
 class CourseService extends Service
 {
@@ -25,6 +27,15 @@ class CourseService extends Service
         $response = $this->sendRequest('core_course_get_courses_by_field', $arguments);
 
         return CourseResourceCollection::make($response['courses']);
+    }
+
+    public function getCourseGroups(int $moodleCourseId): GroupResourceCollection
+    {
+        $arguments = ['courseid' => $moodleCourseId];
+
+        $response = $this->sendRequest('core_group_get_course_groups', $arguments);
+
+        return GroupResourceCollection::make($response);
     }
 
     public function create(CourseDto ...$courses): CourseResourceCollection

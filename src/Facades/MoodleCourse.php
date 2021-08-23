@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Wimando\LaravelMoodle\Clients\ClientAdapterInterface;
 use Wimando\LaravelMoodle\Entities\Dto\Course as CourseDto;
 use Wimando\LaravelMoodle\Resources\CourseResourceCollection;
+use Wimando\LaravelMoodle\Resources\EnrolmentMethodResourceCollection;
 use Wimando\LaravelMoodle\Resources\GroupResourceCollection;
 use Wimando\LaravelMoodle\Services\CourseService;
 
@@ -15,6 +16,7 @@ use Wimando\LaravelMoodle\Services\CourseService;
  * @method static CourseResourceCollection getByField(string $field, string $value)
  * @method static GroupResourceCollection getCourseGroups(int $moodleCourseId)
  * @method static CourseResourceCollection create(CourseDto ...$courses)
+ * @method static EnrolmentMethodResourceCollection getEnrollmentMethods(int $moodleCourseId)
  * @method static mixed delete(array $ids = [])
  */
 class MoodleCourse extends Facade

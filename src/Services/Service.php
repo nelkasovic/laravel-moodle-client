@@ -11,9 +11,11 @@ abstract class Service
 
     private ClientAdapterInterface $client;
 
-    public function __construct(ClientAdapterInterface $client)
+    public function setClient(ClientAdapterInterface $client): self
     {
         $this->client = $client;
+
+        return $this;
     }
 
     public function getAlias(): string

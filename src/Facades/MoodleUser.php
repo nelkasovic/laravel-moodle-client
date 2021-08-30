@@ -9,7 +9,7 @@ use Wimando\LaravelMoodle\Services\UserService;
 
 /**
  * @method static UserService setClient(ClientAdapterInterface $client)
- * @method static UserResourceCollection search(string $key, string $value)
+ * @method static UserResourceCollection search(array $criteria)
  * @method static UserResourceCollection getByField(string $field, array $values = [])
  * @method static UserResourceCollection updateUsers(array $usersWithData)
  */

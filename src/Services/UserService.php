@@ -26,13 +26,10 @@ class UserService extends Service
      * - "email" (string) user email (Note: you can use % for searching but it may be considerably slower!),
      * - "auth" (string) matching user auth plugin
      */
-    public function search(string $key, string $value): UserResourceCollection
+    public function search(array $criteria): UserResourceCollection
     {
         $arguments = [
-            'criteria' => [
-                'key' => $key,
-                'value' => $value
-            ]
+            'criteria' => [$criteria]
         ];
 
         $response = $this->sendRequest('core_user_get_users', $arguments);

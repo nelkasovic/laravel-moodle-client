@@ -16,7 +16,7 @@ use Wimando\LaravelMoodle\Services\CourseService;
  * @method static CourseResourceCollection getByField(string $field, string $value)
  * @method static GroupResourceCollection getCourseGroups(int $moodleCourseId)
  * @method static CourseResourceCollection create(CourseDto ...$courses)
- * @method static EnrolmentMethodResourceCollection getEnrollmentMethods(int $moodleCourseId)
+ * @method static EnrolmentMethodResourceCollection getEnrolmentMethods(int $moodleCourseId)
  * @method static mixed delete(array $ids = [])
  */
 class MoodleCourse extends Facade

@@ -2,7 +2,6 @@
 
 namespace Wimando\LaravelMoodle\Services;
 
-use App\Facades\Services\MoodleService;
 use Wimando\LaravelMoodle\Entities\Dto\Course as CourseDto;
 use Wimando\LaravelMoodle\Resources\CourseResourceCollection;
 use Wimando\LaravelMoodle\Resources\EnrolmentMethodResourceCollection;
@@ -51,7 +50,7 @@ class CourseService extends Service
         return CourseResourceCollection::make($response);
     }
 
-    public function getEnrollmentMethods(int $moodleCourseId): EnrolmentMethodResourceCollection
+    public function getEnrolmentMethods(int $moodleCourseId): EnrolmentMethodResourceCollection
     {
         $arguments = ['courseid' => $moodleCourseId];
 

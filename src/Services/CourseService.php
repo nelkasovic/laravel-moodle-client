@@ -3,6 +3,7 @@
 namespace Wimando\LaravelMoodle\Services;
 
 use Wimando\LaravelMoodle\Entities\Dto\Course as CourseDto;
+use Wimando\LaravelMoodle\Resources\CourseCompletionResource;
 use Wimando\LaravelMoodle\Resources\CourseResourceCollection;
 use Wimando\LaravelMoodle\Resources\EnrolmentMethodResourceCollection;
 use Wimando\LaravelMoodle\Resources\GroupResourceCollection;
@@ -36,6 +37,18 @@ class CourseService extends Service
         $response = $this->sendRequest('core_group_get_course_groups', $arguments);
 
         return GroupResourceCollection::make($response);
+    }
+
+    public function getCourseCompletionStatus(int $moodleCourseId, int $moodleUserId): CourseCompletionResource
+    {
+        $arguments = [
+            'courseid' => $moodleCourseId,
+            'userid' => $moodleUserId,
+        ];
+
+        $response = $this->sendRequest('core_completion_get_course_completion_status', $arguments);
+
+        return CourseCompletionResource::make($response);
     }
 
     public function create(CourseDto ...$courses): CourseResourceCollection

@@ -7,6 +7,7 @@ use Wimando\LaravelMoodle\Resources\UserResourceCollection;
 class UserService extends Service
 {
     /**
+     * Example: search(['key' => 'email', 'value' => '%email.com']);
      * Search for a user by providing key (column) and value. Values can not be empty.
      * Specify different keys only once (fullname => 'user1', auth => 'manual', ...) -
      * The search is executed with AND operator on the criterias. Invalid criterias (keys) are ignored,
